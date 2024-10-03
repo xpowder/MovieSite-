@@ -16,7 +16,6 @@ def movie_list(request):
         movie = Movies.objects.all()
         serializer = MovieSerializer(movie, many=True)
         return Response(serializer.data)
-    
 
     if request.method == 'POST':
         serializer = MovieSerializer(data=request.data)
@@ -78,7 +77,6 @@ def Login_profile(request):
 
     if username is None or password is None:
         return Response({"error": "Please provide both username and password"}, status=status.HTTP_400_BAD_REQUEST)
-
 
     user = authenticate(request, username=username, password=password)
 
