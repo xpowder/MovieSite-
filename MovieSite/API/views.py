@@ -88,3 +88,14 @@ def Login_profile(request):
         }, status=status.HTTP_200_OK)
     else:
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['POST'])
+def Logout_profile(request):
+    try:
+        refresh_token = request.data.get("refresh_token")
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response({'message': 'Logout successful'}, status=status.HTTP_205_RESET_CONTENT)
+    except Exception as er:
+        return Response({'error':str(er)}, status=status.HTTP_400_BAD_REQUEST)
