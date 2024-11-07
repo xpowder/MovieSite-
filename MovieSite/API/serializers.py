@@ -1,4 +1,3 @@
-import attrs
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import *
@@ -10,12 +9,6 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
-
-
-
-from rest_framework import serializers
-from django.contrib.auth.models import User
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -40,3 +33,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+
+
+class WatchlistSerializer(serializers.ModelSerializer):
+    movies = serializers.SlugRelatedField(many=True, queryset=Movies.objects.all(), slug_field='title')
+
+    class Meta:
+        model = Watchlist
+        fields = ['user', 'movies']
